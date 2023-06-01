@@ -26,23 +26,13 @@ const Login = () => {
     const [eye, setEye] = useState(false);
 
     const handleRegisterButton = () => {
-        navigate('/')
+        navigate('/register')
     }
 
     const handleEye = () => {
         setEye(!eye);
     }
-
-    const validateEmail = () => {
-        if (!emailFocus) return '';
-      
-        if (email === '') return 'Email is required';
-      
-        if (!EMAIL_REGEX.test(email)) return 'Invalid email format';
-      
-        return '';
-      };
-      
+  
     useEffect(() => {
         const result = PWD_REGEX.test(pwd);
         setValidPwd(result);
@@ -67,10 +57,9 @@ const Login = () => {
                             variant='standard' 
                             value={email} 
                             onChange={(e) => setEmail(e.target.value)} 
-                            onFocus={() => setEmailFocus(true)} 
-                            onBlur={() => setEmailFocus(false)} 
-                            helperText={validateEmail()} 
-                            error={Boolean(validateEmail())} required />
+                            // onFocus={() => setEmailFocus(true)} 
+                            // onBlur={() => setEmailFocus(false)} 
+                        />
                     </div>
                     
                     <div className='required input-group'>
@@ -87,7 +76,8 @@ const Login = () => {
                                             {eye ? <VisibilityIcon fontSize='small' /> : <VisibilityOffIcon fontSize='small' />}
                                         </IconButton> 
                                     </InputAdornment>
-                            }} required />
+                            }}
+                        />
                     </div>
                     
                     <div className='actions'>

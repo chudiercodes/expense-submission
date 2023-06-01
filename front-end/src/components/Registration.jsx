@@ -34,7 +34,7 @@ const Registration = () => {
     const [eye, setEye] = useState(false);
 
     const handleLoginClick = () => {
-        navigate('/login');
+        navigate('/');
     };
   
     const handleEye = () => {
@@ -113,11 +113,11 @@ const Registration = () => {
                             required 
                             InputProps={{
                                 endAdornment: 
-                                <InputAdornment position='end'>
-                                    <IconButton  onClick={handleEye}>
-                                        {eye ? <VisibilityIcon fontSize='small' /> : <VisibilityOffIcon fontSize='small' />}
-                                    </IconButton> 
-                                </InputAdornment>
+                                    <InputAdornment position='end'>
+                                        <IconButton  onClick={handleEye}>
+                                            {eye ? <VisibilityIcon fontSize='small' /> : <VisibilityOffIcon fontSize='small' />}
+                                        </IconButton> 
+                                    </InputAdornment>
                             }} 
                         />
                     </div>
