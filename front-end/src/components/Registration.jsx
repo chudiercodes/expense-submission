@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+
+import axios from 'axios';
 import './Registration.css';
 import { useNavigate } from 'react-router-dom';
 import { Button, Select, MenuItem, InputLabel, TextField, FormControl, InputAdornment, IconButton, InputProps } from '@mui/material';
@@ -25,7 +27,7 @@ const Registration = () => {
 	const [validPwd, setValidPwd] = useState(false);
 	const [pwdFocus, setPwdFocus] = useState(false);
 
-    const [selectRole, setSelectRole] = useState('');
+    const [role, setRole] = useState('');
     const [selectRoleFocus, setSelectRoleFocus] = useState(false);
 
     const [errMsg, setErrMsg] = useState('');
@@ -54,9 +56,35 @@ const Registration = () => {
         setValidPwd(result);
     }, [pwd]);
 
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+    
+        const data = {
+            firstname: fname,
+            lastname: lname,
+            email: email,
+            password: pwd,
+            role: role
+        }
+    
+        console.log(data);
+    
+        const config = {
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            }
+        }
+    
+        axios.post(`http://localhost:8080/employee`, data, config)
+        .then( () => {
+            setSuccess(true)
+            navigate('/')
+        })
+     }
+
     return (
         <div id='container'>
-            <form id='sign-in-card' noValidate autoComplete='off'>
+            <form id='sign-in-card' noValidate autoComplete='off' onSubmit={handleSubmit}>
                 <div className='column left'>
                     <div>
                         <img id='yc-logo' src='https://ww1.freelogovectors.net/wp-content/uploads/2023/03/revature-logo-freelogovectors.net_.png?lossy=1&w=2560&ssl=1'/>
@@ -125,9 +153,15 @@ const Registration = () => {
                     <div className='required input-group'> 
                         <FormControl variant='standard' required fullWidth>
                             <InputLabel id="select-label">Select Role</InputLabel>
-                            <Select labelId="select-label" id="demo-simple-select" label="Select Role">
-                                <MenuItem value={10}>Employee</MenuItem>
-                                <MenuItem value={20}>Manager</MenuItem>
+                            <Select 
+                                labelId="select-label" 
+                                id="demo-simple-select" 
+                                label="Select Role"
+                                value={role}
+                                onChange={(e) => setRole(e.target.value)}
+                            >
+                                <MenuItem value='EMPLOYEE'>Employee</MenuItem>
+                                <MenuItem value='MANAGER'>Manager</MenuItem>
                             </Select>
                         </FormControl>
                     </div>
