@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import './Registration.css';
+
 import { useNavigate } from 'react-router-dom';
-import { Button, Select, MenuItem, InputLabel, TextField, FormControl, InputAdornment, IconButton, InputProps } from '@mui/material';
+import {Button, Select, MenuItem, InputLabel, TextField, FormControl, InputAdornment, IconButton, InputProps} from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
@@ -9,15 +10,9 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9]+@+[a-zA-Z0-9]+.+[A-z]/;
 
-const Registration = () => {
+const Login = () => {
     const navigate = useNavigate();
-    
-    const [fname, setFname] = useState('');
-    const [fnameFocus, setFnameFocus] = useState(false);
 
-	const [lname, setLname] = useState('');
-    const [lnameFocus, setLnameFocus] = useState(false);
-    
     const [email, setEmail] = useState('');
     const [emailFocus, setEmailFocus] = useState(false);
 
@@ -25,30 +20,29 @@ const Registration = () => {
 	const [validPwd, setValidPwd] = useState(false);
 	const [pwdFocus, setPwdFocus] = useState(false);
 
-    const [selectRole, setSelectRole] = useState('');
-    const [selectRoleFocus, setSelectRoleFocus] = useState(false);
-
     const [errMsg, setErrMsg] = useState('');
 	const [success, setSuccess] = useState(false);
 
     const [eye, setEye] = useState(false);
 
-    const handleLoginClick = () => {
-        navigate('/login');
-    };
-  
+    const handleRegisterButton = () => {
+        navigate('/')
+    }
+
     const handleEye = () => {
         setEye(!eye);
     }
 
     const validateEmail = () => {
         if (!emailFocus) return '';
+      
         if (email === '') return 'Email is required';
+      
         if (!EMAIL_REGEX.test(email)) return 'Invalid email format';
       
         return '';
-    };
-
+      };
+      
     useEffect(() => {
         const result = PWD_REGEX.test(pwd);
         setValidPwd(result);
@@ -67,29 +61,6 @@ const Registration = () => {
                 {/* XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX */}
 
                 <div className='column right'>
-                    <div id='first-and-last'>
-                        <div className='input-group'>
-                            <TextField 
-                                label='First Name' 
-                                variant='standard' 
-                                type='text' 
-                                value={fname} 
-                                onChange={(e) => setFname(e.target.value)} 
-                                fullWidth
-                            />
-                        </div>
-                        <div className='input-group'>
-                            <TextField 
-                                label='Last Name' 
-                                variant='standard' 
-                                type='text' 
-                                value={lname} 
-                                onChange={(e) => setLname(e.target.value)} 
-                                fullWidth 
-                            />
-                        </div>
-                    </div>
-
                     <div className='required input-group'>
                         <TextField 
                             label='Email' 
@@ -99,8 +70,7 @@ const Registration = () => {
                             onFocus={() => setEmailFocus(true)} 
                             onBlur={() => setEmailFocus(false)} 
                             helperText={validateEmail()} 
-                            error={Boolean(validateEmail())} required 
-                        />
+                            error={Boolean(validateEmail())} required />
                     </div>
                     
                     <div className='required input-group'>
@@ -110,35 +80,22 @@ const Registration = () => {
                             type={eye?'text':'password'}
                             value={pwd}
                             onChange={(e) => setPwd(e.target.value)}
-                            required 
                             InputProps={{
                                 endAdornment: 
-                                <InputAdornment position='end'>
-                                    <IconButton  onClick={handleEye}>
-                                        {eye ? <VisibilityIcon fontSize='small' /> : <VisibilityOffIcon fontSize='small' />}
-                                    </IconButton> 
-                                </InputAdornment>
-                            }} 
-                        />
+                                    <InputAdornment position='end'>
+                                        <IconButton  onClick={handleEye}>
+                                            {eye ? <VisibilityIcon fontSize='small' /> : <VisibilityOffIcon fontSize='small' />}
+                                        </IconButton> 
+                                    </InputAdornment>
+                            }} required />
                     </div>
-
-                    <div className='required input-group'> 
-                        <FormControl variant='standard' required fullWidth>
-                            <InputLabel id="select-label">Select Role</InputLabel>
-                            <Select labelId="select-label" id="demo-simple-select" label="Select Role">
-                                <MenuItem value={10}>Employee</MenuItem>
-                                <MenuItem value={20}>Manager</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </div>
-                        
+                    
                     <div className='actions'>
                         <Button 
                             className='button'
                             type='submit' 
-                            variant='contained'
-                        > 
-                                Sign Up
+                            variant='contained'> 
+                                Log In
                         </Button>
                     </div>
                 </div>
@@ -146,18 +103,18 @@ const Registration = () => {
 
             <div id='account-links'>
                 <div>
-                    Already have an account?
+                    Don't have an account?
                     <Button 
-                        className='MuiTypography-root MuiLink-root MuiLink-underlineHover MuiLink-button MuiTypography-colorPrimary'
+                        className='MuiTypography-root MuiLink-root MuiLink-underlineHover MuiLink-button MuiTypography-colorPrimary' 
                         type='button'
-                        onClick={handleLoginClick}
+                        onClick={handleRegisterButton}
                     >
-                        Log in.
-                    </Button> 
+                        Sign Up.
+                    </Button>
                 </div>
             </div>
         </div>
     )
 }
 
-export default Registration
+export default Login
